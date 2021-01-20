@@ -1,0 +1,107 @@
+//---------------------------------------------------------------------------
+
+
+#pragma hdrstop
+
+#include "ClasaFiguri.h"
+#include "Source.h"
+#pragma package(smart_init)
+//---------------------------------------------------------------------------
+Figuri::Figuri(int x, int y)
+{
+xaj=0;
+yaj=0;
+X=x;
+Y=y;
+intMarime=1;
+intColIndex=0;
+}
+
+void Figuri::InitPen(int x, int y)
+{
+        Interfata->Panza->Canvas->Pen->Color=Interfata->Culori->ForegroundColor;
+        intColIndex=Interfata->Culori->ForegroundIndex;
+
+        Interfata->Panza->Canvas->Pen->Width=Interfata->Marime->Position;
+        intMarime=Interfata->Marime->Position;
+
+        Interfata->Panza->Canvas->MoveTo(x,y);
+}
+
+void Figuri::Umplere(int x, int y)
+{
+        Interfata->Panza->Canvas->Brush->Color=Interfata->Culori->ForegroundColor;
+        intColIndex=Interfata->Culori->ForegroundIndex;
+
+        Interfata->Panza->Canvas->FloodFill(x,y,Interfata->Panza->Canvas->Pixels[x][y],fsSurface);
+}
+
+void Figuri::Dreptunghi(int x, int y)
+{
+        Interfata->Panza->Canvas->Brush->Style=bsClear;
+        Interfata->Panza->Canvas->Rectangle(this->getXaj(),this->getYaj(),x,y);
+
+        String strxaj=IntToStr(this->getXaj());
+        String stryaj=IntToStr(this->getYaj());
+        Interfata->SendDreptunghi+=strxaj;
+        Interfata->SendDreptunghi+=';';
+        Interfata->SendDreptunghi+=stryaj;
+        Interfata->SendDreptunghi+=';';
+
+        String strx=IntToStr(x);
+        String stry=IntToStr(y);
+        Interfata->SendDreptunghi+=strx;
+        Interfata->SendDreptunghi+=';';
+        Interfata->SendDreptunghi+=stry;
+        Interfata->SendDreptunghi+=';';
+}
+
+void Figuri::Cerc(int x, int y)
+{
+        Interfata->Panza->Canvas->Arc(this->getXaj(),this->getYaj(),x,y,x,y,x,y);
+
+        String strxaj=IntToStr(this->getXaj());
+        String stryaj=IntToStr(this->getYaj());
+        Interfata->SendCerc+=strxaj;
+        Interfata->SendCerc+=';';
+        Interfata->SendCerc+=stryaj;
+        Interfata->SendCerc+=';';
+
+        String strx=IntToStr(x);
+        String stry=IntToStr(y);
+        Interfata->SendCerc+=strx;
+        Interfata->SendCerc+=';';
+        Interfata->SendCerc+=stry;
+        Interfata->SendCerc+=';';
+}
+
+void Figuri::InitGuma(int x,int y)
+{
+        Interfata->Panza->Canvas->Pen->Color=clWhite;
+
+        Interfata->Panza->Canvas->Pen->Width=Interfata->Marime->Position+10;
+        intMarime=Interfata->Marime->Position+10;
+
+        Interfata->Panza->Canvas->MoveTo(x,y);
+}
+
+void Figuri::setXaj(int x0)
+{
+        xaj=x0;
+}
+
+void Figuri::setYaj(int y0)
+{
+       yaj=y0;
+}
+
+int Figuri::getXaj()
+{
+        return xaj;
+}
+
+int Figuri::getYaj()
+{
+        return yaj;
+}
+
